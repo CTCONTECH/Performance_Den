@@ -763,6 +763,43 @@ img {
 }
 
 @media (max-width: 640px) {
+  /* Fix video cropping on mobile - show full frame */
+  .hero-video {
+    object-fit: contain;
+    background: #000;
+  }
+
+  /* Optimize hero section spacing */
+  .hero {
+    padding: 5rem 1.25rem 4rem;
+    min-height: 80vh;
+  }
+
+  /* Better section spacing on mobile */
+  .section {
+    padding: 2.5rem 1.25rem 4rem;
+  }
+
+  .section-header {
+    margin-bottom: 1.75rem;
+  }
+
+  /* Improve readability */
+  .section-header h2 {
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+  }
+
+  .eyebrow {
+    font-size: 0.8125rem;
+  }
+
+  /* Ensure comfortable touch targets */
+  .btn {
+    min-height: 44px;
+    padding: 0.875rem 1.5rem;
+  }
+
+  /* Grid layouts */
   .instagram-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -771,6 +808,16 @@ img {
   .card-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  /* Optimize navigation menu spacing on mobile */
+  .nav-menu.open {
+    padding: 1rem;
+  }
+
+  .nav-menu a {
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
   }
 }
 
