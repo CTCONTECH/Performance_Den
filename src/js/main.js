@@ -18,15 +18,27 @@ if (heroVideo && heroConfig?.sources?.length) {
   const pauseSeconds = heroConfig.pauseBetweenSeconds ?? 0;
   const playbackRate = heroConfig.playbackRate ?? 1;
   const fadeDuration = 600;
+  let isTransitioning = false;
 
   const setSource = (index) => {
+    if (isTransitioning) return; // Prevent multiple transitions
+    isTransitioning = true;
+    
     heroIndex = index % sources.length;
     heroVideo.classList.add("is-fading");
+    
     setTimeout(() => {
       heroVideo.src = sources[heroIndex];
       heroVideo.playbackRate = playbackRate;
       heroVideo.load();
-      heroVideo.play().catch(() => {});
+      
+      // Ensure video plays after loading
+      const playPromise = heroVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => console.log("Video play prevented"));
+      }
+      
+      isTransitioning = false;
     }, fadeDuration);
   };
 
@@ -35,12 +47,21 @@ if (heroVideo && heroConfig?.sources?.length) {
   });
 
   heroVideo.addEventListener("error", () => {
+    console.error("Video error, skipping to next");
+    isTransitioning = false;
     setSource(heroIndex + 1);
   });
 
   heroVideo.addEventListener("loadeddata", () => {
     heroVideo.classList.remove("is-fading");
   });
+
+  // Fallback: if video is paused unexpectedly, resume playback
+  setInterval(() => {
+    if (heroVideo && heroVideo.paused && !isTransitioning && document.hidden === false) {
+      heroVideo.play().catch(() => {});
+    }
+  }, 1000);
 
   setSource(0);
 }
