@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Performance Den: View our showcase of high-performance vehicle builds, tuning projects, and modifications." />
+    <meta name="theme-color" content="#0a0a0a" />
+    <title>Builds & Gallery | Performance Den</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="assets/images/logo-brand-hq.png" sizes="any" />
+    <link rel="stylesheet" href="src/css/styles.css" />
+    <link rel="stylesheet" href="src/css/builds.css" />
+    <script defer src="src/js/main.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="index.html" aria-label="Performance Den home">
+          <img src="assets/images/logo-brand.png" srcset="assets/images/logo-brand-hq.png 2x, assets/images/logo-brand-ultra.png 3x" alt="Performance Den logo" />
+          <span class="logo-text">Performance Den</span>
+        </a>
+        <nav class="primary-nav" aria-label="Primary">
+          <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+          <ul id="nav-menu" class="nav-menu">
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="builds.html">Builds</a></li>
+            <li><a href="index.html#partners">Partners</a></li>
+            <li><a href="index.html#instagram">Instagram</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="builds-hero">
+        <div class="container">
+          <div class="builds-hero-content">
+            <p class="eyebrow">Project Showcase</p>
+            <h1>Performance Projects</h1>
+            <p class="lead">
+              From street-ready daily drivers to track-focused builds, explore our collection of precision-engineered vehicles. Each project represents meticulous attention to detail and performance excellence.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="builds-section">
+        <div class="container">
+          <div class="builds-filters">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="engine">Engine Builds</button>
+            <button class="filter-btn" data-filter="suspension">Suspension</button>
+            <button class="filter-btn" data-filter="tuning">ECU Tuning</button>
+            <button class="filter-btn" data-filter="exhaust">Exhaust</button>
+          </div>
+
+          <div class="builds-grid">
+            <article class="build-card" data-category="engine">
+              <div class="build-image">
+                <img src="assets/images/placeholder-car.svg" alt="K20Z1 Full Engine Build - Honda Civic Type R" />
+                <span class="build-badge">Engine Build</span>
+              </div>
+              <div class="build-info">
+                <h3>K20Z1 Full Engine Build</h3>
+                <p class="build-platform">Honda Civic Type R (FD2)</p>
+                <p class="build-description">
+                  Complete K-series engine overhaul with performance internals, custom ECU tuning, and dyno-verified 280+ kW output. Built for reliability and track performance.
+                </p>
+                <div class="build-specs">
+                  <span>280+ kW</span>
+                  <span>K20Z1</span>
+                  <span>Full Build</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="build-card" data-category="suspension">
+              <div class="build-image">
+                <img src="assets/images/placeholder-car.svg" alt="Track-Focused Suspension Platform - Honda Integra DC5" />
+                <span class="build-badge">Suspension</span>
+              </div>
+              <div class="build-info">
+                <h3>Track-Focused Suspension Platform</h3>
+                <p class="build-platform">Honda Integra DC5</p>
+                <p class="build-description">
+                  Complete suspension refresh with coilover setup, adjustable ARBs, and uprated steering components. Engineered for circuit performance and daily comfort.
+                </p>
+                <div class="build-specs">
+                  <span>Coilovers</span>
+                  <span>Adjustable ARB</span>
+                  <span>Full Kit</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="build-card" data-category="tuning">
+              <div class="build-image">
+                <img src="assets/images/placeholder-car.svg" alt="ECU Tuning & Calibration - Honda Civic SI" />
+                <span class="build-badge">ECU Tuning</span>
+              </div>
+              <div class="build-info">
+                <h3>ECU Tuning & Calibration</h3>
+                <p class="build-platform">Honda Civic SI (FG2)</p>
+                <p class="build-description">
+                  Custom ECU mapping with optimized fuel and ignition timing. Results: 15% power increase, sharper throttle response, and improved fuel efficiency.
+                </p>
+                <div class="build-specs">
+                  <span>+15% Power</span>
+                  <span>Custom Map</span>
+                  <span>Dyno-Verified</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="build-card" data-category="exhaust">
+              <div class="build-image">
+                <img src="assets/images/placeholder-car.svg" alt="Complete Exhaust System - Honda S2000" />
+                <span class="build-badge">Exhaust</span>
+              </div>
+              <div class="build-info">
+                <h3>Complete Exhaust System</h3>
+                <p class="build-platform">Honda S2000 (AP2)</p>
+                <p class="build-description">
+                  Custom stainless steel exhaust with optimized manifold runner design. Gains 8kW+ while maintaining street legality and reliability.
+                </p>
+                <div class="build-specs">
+                  <span>+8kW</span>
+                  <span>Manifold</span>
+                  <span>Catback</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="build-card" data-category="engine">
+              <div class="build-image">
+                <img src="assets/images/placeholder-car.svg" alt="Turbo Upgrade Project - Honda Civic" />
+                <span class="build-badge">Engine Build</span>
+              </div>
+              <div class="build-info">
+                <h3>Turbo Upgrade Project</h3>
+                <p class="build-platform">Honda Civic (FK8)</p>
+                <p class="build-description">
+                  Complete turbocharger installation with supporting fuel system and ECU calibration. Custom-built for boost and reliability on stock internals.
+                </p>
+                <div class="build-specs">
+                  <span>350+ kW</span>
+                  <span>Turbo</span>
+                  <span>Custom Build</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="build-card" data-category="tuning">
+              <div class="build-image">
+                <img src="assets/images/placeholder-car.svg" alt="OEM+ Performance Tune - Honda Accord" />
+                <span class="build-badge">ECU Tuning</span>
+              </div>
+              <div class="build-info">
+                <h3>OEM+ Performance Tune</h3>
+                <p class="build-platform">Honda Accord (CP3)</p>
+                <p class="build-description">
+                  Refined ECU tuning for daily driver performance. Improved response and efficiency without compromising reliability or warranty concerns.
+                </p>
+                <div class="build-specs">
+                  <span>+12% Power</span>
+                  <span>OEM+ Safe</span>
+                  <span>Daily Driver</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="builds-cta section">
+        <div class="container">
+          <div class="cta-content">
+            <h2>Ready to Build?</h2>
+            <p>Have a project in mind? Our team specializes in turning performance visions into reality.</p>
+            <a class="btn primary" href="index.html#contact">Start Your Project</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>&copy; 2026 Performance Den. Website by CTCONTECH.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Filter functionality
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const filter = this.dataset.filter;
+          
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          
+          document.querySelectorAll('.build-card').forEach(card => {
+            if (filter === 'all' || card.dataset.category === filter) {
+              card.style.display = 'block';
+              setTimeout(() => card.classList.add('fade-in'), 10);
+            } else {
+              card.classList.remove('fade-in');
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
