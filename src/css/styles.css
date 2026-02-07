@@ -804,6 +804,9 @@ img {
   height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
+  justify-content: flex-start !important;
+  /* Crop to show approximately 75% of embed - hides like/comment buttons */
+  clip-path: inset(0 0 25% 0);
 }
 
 /* Force Instagram iframe to fit */
