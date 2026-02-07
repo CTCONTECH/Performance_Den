@@ -254,24 +254,37 @@ if (contactForm) {
     const platform = formData.get("platform") || "Not specified";
     const message = formData.get("message");
     
-    // Disable button
+    // Show loading state
     submitBtn.disabled = true;
-    submitBtn.textContent = "Sending...";
+    submitBtn.textContent = "⏳ Processing...";
+    
+    statusEl.style.display = "flex";
+    statusEl.innerHTML = `<span>Processing your enquiry...</span>`;
+    statusEl.style.borderColor = "var(--muted)";
+    statusEl.style.backgroundColor = "rgba(168, 176, 183, 0.1)";
+    statusEl.style.color = "var(--muted)";
+    
+    // Simulate a brief delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 800));
     
     // Build message for mailto
     const mailtoBody = `${message}\n\n---\nVehicle: ${platform}\nFrom: ${name}`;
     const mailtoLink = `mailto:Ctconenquiry@gmail.com?subject=Performance Den Enquiry from ${name}&body=${encodeURIComponent(mailtoBody)}`;
     
-    // Show success and offer options
+    // Show success with options
     statusEl.innerHTML = `
-      ✓ Thanks ${name}!<br>
-      <small style="display: block; margin-top: 0.5rem;">
-        Choose how to send:<br>
-        <a href="${mailtoLink}" style="color: var(--accent); text-decoration: underline; display: inline-block; margin: 0.3rem 0;">📧 Send via Email</a>
-        &nbsp; • &nbsp;
-        <a href="https://wa.me/27823203406?text=${encodeURIComponent(`Hi, I'd like to inquire about: ${message}`)}" style="color: var(--accent); text-decoration: underline; display: inline-block; margin: 0.3rem 0;">💬 Send via WhatsApp</a>
-      </small>
+      <div style="width: 100%; text-align: center;">
+        <div style="font-weight: 600; margin-bottom: 0.75rem;">✓ Choose how to send</div>
+        <small style="display: block; margin-bottom: 0.5rem; opacity: 0.85;">Your message is ready to send via:</small>
+        <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; align-items: center;">
+          <a href="${mailtoLink}" style="display: inline-block; padding: 0.6rem 1.2rem; background: var(--accent); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s;">📧 Email</a>
+          <span style="opacity: 0.5;">or</span>
+          <a href="https://wa.me/27823203406?text=${encodeURIComponent(`Hi, I'd like to inquire about: ${message}`)}" style="display: inline-block; padding: 0.6rem 1.2rem; background: #25D366; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s;">💬 WhatsApp</a>
+        </div>
+      </div>
     `;
+    statusEl.style.borderColor = "var(--accent)";
+    statusEl.style.backgroundColor = "rgba(255, 59, 47, 0.08)";
     statusEl.style.color = "var(--accent)";
     
     // Reset form
@@ -279,10 +292,16 @@ if (contactForm) {
     submitBtn.textContent = "Send Enquiry";
     submitBtn.disabled = false;
     
-    // Clear after 8 seconds
+    // Keep message visible for 10 seconds, then fade
     setTimeout(() => {
-      statusEl.textContent = "";
-    }, 8000);
+      statusEl.style.opacity = "0.5";
+    }, 6000);
+    
+    setTimeout(() => {
+      statusEl.innerHTML = "";
+      statusEl.style.opacity = "1";
+      statusEl.style.display = "none";
+    }, 10000);
   });
 }
 
