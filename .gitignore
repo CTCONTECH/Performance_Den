@@ -10,8 +10,6 @@ build/
 data/
 scripts/*.js
 assets/media/
-assets/videos/
-*.mp4
 *.pdf
 assets/images/IMG-*.jpg
 assets/images/Other.pdf
