@@ -19,50 +19,76 @@ if (heroVideo && heroConfig?.sources?.length) {
   const playbackRate = heroConfig.playbackRate ?? 1;
   const fadeDuration = 600;
   let isTransitioning = false;
+  let loadAttempts = 0;
+  const maxLoadAttempts = 3;
 
   const setSource = (index) => {
-    if (isTransitioning) return; // Prevent multiple transitions
+    if (isTransitioning) return;
     isTransitioning = true;
+    loadAttempts = 0;
     
     heroIndex = index % sources.length;
+    console.log(`Loading video ${heroIndex + 1}/${sources.length}: ${sources[heroIndex]}`);
+    
     heroVideo.classList.add("is-fading");
     
     setTimeout(() => {
       heroVideo.src = sources[heroIndex];
       heroVideo.playbackRate = playbackRate;
+      
+      // Remove any leftover error handlers before loading new video
+      heroVideo.onerror = null;
+      heroVideo.oncanplay = null;
+      
       heroVideo.load();
-      
-      // Ensure video plays after loading
-      const playPromise = heroVideo.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => console.log("Video play prevented"));
-      }
-      
       isTransitioning = false;
     }, fadeDuration);
   };
 
+  const playNextVideo = () => {
+    setTimeout(() => {
+      setSource(heroIndex + 1);
+    }, pauseSeconds * 1000);
+  };
+
   heroVideo.addEventListener("ended", () => {
-    setTimeout(() => setSource(heroIndex + 1), pauseSeconds * 1000);
+    console.log("Video ended, playing next");
+    playNextVideo();
   });
 
-  heroVideo.addEventListener("error", () => {
-    console.error("Video error, skipping to next");
-    isTransitioning = false;
-    setSource(heroIndex + 1);
+  heroVideo.addEventListener("error", (e) => {
+    console.error(`Video load error for ${sources[heroIndex]}:`, e);
+    loadAttempts++;
+    
+    if (loadAttempts < maxLoadAttempts) {
+      console.log(`Retry attempt ${loadAttempts}/${maxLoadAttempts}`);
+      setTimeout(() => {
+        heroVideo.load();
+      }, 500);
+    } else {
+      console.log("Max retries reached, skipping to next video");
+      isTransitioning = false;
+      playNextVideo();
+    }
   });
 
-  heroVideo.addEventListener("loadeddata", () => {
+  // Use 'canplay' instead of 'loadeddata' for better reliability
+  heroVideo.addEventListener("canplay", () => {
     heroVideo.classList.remove("is-fading");
+    heroVideo.play().catch((err) => {
+      console.error("Play failed:", err);
+    });
   });
 
-  // Fallback: if video is paused unexpectedly, resume playback
+  // Fallback: ensure video is playing
   setInterval(() => {
     if (heroVideo && heroVideo.paused && !isTransitioning && document.hidden === false) {
+      console.log("Video paused unexpectedly, resuming...");
       heroVideo.play().catch(() => {});
     }
   }, 1000);
 
+  // Start first video
   setSource(0);
 }
 
