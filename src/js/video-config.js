@@ -4,8 +4,6 @@ window.videoConfig = {
       {
         name: "hero-bg",
         formats: [
-          { src: "assets/videos/hero-bg.h265.mp4", type: "video/mp4; codecs=hev1" },
-          { src: "assets/videos/hero-bg.h264.mp4", type: "video/mp4; codecs=avc1" },
           { src: "assets/videos/hero-bg.mp4", type: "video/mp4" }
         ],
         transition: 600  // milliseconds for fade
@@ -13,8 +11,6 @@ window.videoConfig = {
       {
         name: "hero-2",
         formats: [
-          { src: "assets/videos/hero-2.h265.mp4", type: "video/mp4; codecs=hev1" },
-          { src: "assets/videos/hero-2.h264.mp4", type: "video/mp4; codecs=avc1" },
           { src: "assets/videos/hero-2.mp4", type: "video/mp4" }
         ],
         transition: 650
@@ -22,8 +18,6 @@ window.videoConfig = {
       {
         name: "hero-3",
         formats: [
-          { src: "assets/videos/hero-3.h265.mp4", type: "video/mp4; codecs=hev1" },
-          { src: "assets/videos/hero-3.h264.mp4", type: "video/mp4; codecs=avc1" },
           { src: "assets/videos/hero-3.mp4", type: "video/mp4" }
         ],
         transition: 600
