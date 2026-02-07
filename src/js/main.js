@@ -243,6 +243,24 @@ if (instagramGrid && config?.featuredPosts?.length) {
 // Contact form submission handler
 const contactForm = document.getElementById("contact-form");
 if (contactForm) {
+  let statusClearTimeout; // Track timeout to allow cancellation
+  
+  // Function to clear status message
+  const clearStatus = () => {
+    const statusEl = contactForm.querySelector(".form-status");
+    if (statusClearTimeout) clearTimeout(statusClearTimeout);
+    if (statusEl) {
+      statusEl.style.opacity = "0";
+      statusEl.style.transition = "opacity 0.3s ease";
+      setTimeout(() => {
+        statusEl.innerHTML = "";
+        statusEl.style.opacity = "1";
+        statusEl.style.display = "none";
+        statusEl.style.transition = "none";
+      }, 300);
+    }
+  };
+  
   contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     
@@ -254,11 +272,15 @@ if (contactForm) {
     const platform = formData.get("platform") || "Not specified";
     const message = formData.get("message");
     
+    // Clear any existing timeout
+    if (statusClearTimeout) clearTimeout(statusClearTimeout);
+    
     // Show loading state
     submitBtn.disabled = true;
     submitBtn.textContent = "⏳ Processing...";
     
     statusEl.style.display = "flex";
+    statusEl.style.transition = "none";
     statusEl.innerHTML = `<span>Processing your enquiry...</span>`;
     statusEl.style.borderColor = "var(--muted)";
     statusEl.style.backgroundColor = "rgba(168, 176, 183, 0.1)";
@@ -271,39 +293,48 @@ if (contactForm) {
     const mailtoBody = `${message}\n\n---\nVehicle: ${platform}\nFrom: ${name}`;
     const mailtoLink = `mailto:Ctconenquiry@gmail.com?subject=Performance Den Enquiry from ${name}&body=${encodeURIComponent(mailtoBody)}`;
     
-    // Show success with options
+    // Show success with options and close button
     statusEl.innerHTML = `
-      <div style="width: 100%; text-align: center;">
-        <div style="font-weight: 600; margin-bottom: 0.75rem;">✓ Choose how to send</div>
-        <small style="display: block; margin-bottom: 0.5rem; opacity: 0.85;">Your message is ready to send via:</small>
-        <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; align-items: center;">
-          <a href="${mailtoLink}" style="display: inline-block; padding: 0.6rem 1.2rem; background: var(--accent); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s;">📧 Email</a>
-          <span style="opacity: 0.5;">or</span>
-          <a href="https://wa.me/27823203406?text=${encodeURIComponent(`Hi, I'd like to inquire about: ${message}`)}" style="display: inline-block; padding: 0.6rem 1.2rem; background: #25D366; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s;">💬 WhatsApp</a>
+      <div style="width: 100%; display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div style="flex: 1;">
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">✓ Choose how to send</div>
+            <small style="display: block; opacity: 0.85; line-height: 1.4;">Pick your preferred way to contact us</small>
+          </div>
+          <button type="button" onclick="this.closest('.form-status').parentElement.dispatchEvent(new Event('clearStatus'))" style="background: none; border: none; color: inherit; font-size: 1.5rem; cursor: pointer; opacity: 0.6; transition: opacity 0.2s; padding: 0; margin: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">✕</button>
         </div>
+        <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; align-items: center;">
+          <a href="${mailtoLink}" style="display: inline-block; padding: 0.7rem 1.5rem; background: var(--accent); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; border: 2px solid var(--accent); cursor: pointer;">📧 Email</a>
+          <span style="opacity: 0.4; font-size: 0.85rem;">or</span>
+          <a href="https://wa.me/27823203406?text=${encodeURIComponent(`Hi, I'd like to inquire about: ${message}`)}" style="display: inline-block; padding: 0.7rem 1.5rem; background: #25D366; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; border: 2px solid #25D366; cursor: pointer;">💬 WhatsApp</a>
+        </div>
+        <small style="text-align: center; opacity: 0.6; font-size: 0.8rem;">Click close (✕) or pick a method above</small>
       </div>
     `;
     statusEl.style.borderColor = "var(--accent)";
     statusEl.style.backgroundColor = "rgba(255, 59, 47, 0.08)";
     statusEl.style.color = "var(--accent)";
     
+    // Make status clickable to dismiss
+    statusEl.style.cursor = "pointer";
+    statusEl.onclick = () => clearStatus();
+    
     // Reset form
     contactForm.reset();
     submitBtn.textContent = "Send Enquiry";
     submitBtn.disabled = false;
     
-    // Keep message visible for 10 seconds, then fade
-    setTimeout(() => {
-      statusEl.style.opacity = "0.5";
-    }, 6000);
-    
-    setTimeout(() => {
-      statusEl.innerHTML = "";
-      statusEl.style.opacity = "1";
-      statusEl.style.display = "none";
-    }, 10000);
+    // Auto-clear after 8 seconds with fade
+    statusClearTimeout = setTimeout(() => {
+      statusEl.style.transition = "opacity 0.3s ease";
+      statusEl.style.opacity = "0";
+      setTimeout(() => {
+        clearStatus();
+      }, 300);
+    }, 8000);
   });
 }
+
 
 
 

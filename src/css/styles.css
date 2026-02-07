@@ -904,24 +904,38 @@ img {
 .form-status {
   font-size: 0.95rem;
   font-weight: 500;
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.5rem;
   border-radius: 12px;
-  text-align: center;
-  min-height: 2.5rem;
+  text-align: left;
+  min-height: auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: space-between;
   background: rgba(255, 59, 47, 0.1);
   border: 1.5px solid var(--accent);
   color: var(--accent);
   animation: slideInUp 0.3s ease-out;
   line-height: 1.5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.form-status:hover {
+  background: rgba(255, 59, 47, 0.15);
+  box-shadow: 0 4px 12px rgba(255, 59, 47, 0.15);
 }
 
 .form-status a {
   color: inherit;
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.form-status a:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
 }
 
 .form-status small {
