@@ -319,9 +319,8 @@ if (contactForm) {
     const actionLinks = statusEl.querySelectorAll(".form-action-link");
     actionLinks.forEach(link => {
       link.addEventListener("click", (e) => {
-        // Don't prevent default - let the link open
-        // But schedule the status to clear after a short delay
-        setTimeout(() => clearStatus(), 500);
+        // Clear status immediately when clicking an action link
+        clearStatus();
       });
     });
     
