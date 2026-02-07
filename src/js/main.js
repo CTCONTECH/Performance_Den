@@ -8,87 +8,166 @@ if (navToggle && navMenu) {
   });
 }
 
-// Hero video playlist
+// Hero video playlist with advanced transitions
 const heroVideo = document.querySelector(".hero-video");
+const heroLoading = document.querySelector(".hero-loading");
 const heroConfig = window.videoConfig?.hero;
 
 if (heroVideo && heroConfig?.sources?.length) {
   let heroIndex = 0;
+  let nextIndex = 1;
   const sources = heroConfig.sources;
-  const pauseSeconds = heroConfig.pauseBetweenSeconds ?? 0;
   const playbackRate = heroConfig.playbackRate ?? 1;
-  const fadeDuration = 600;
+  const pauseSeconds = heroConfig.pauseBetweenSeconds ?? 0;
+  const transitionVariation = heroConfig.transitionVariation ?? 0;
+  
   let isTransitioning = false;
-  let loadAttempts = 0;
-  const maxLoadAttempts = 3;
+  let nextVideoReady = false;
+  let nextVideoElement = null;
 
-  const setSource = (index) => {
+  // Helper: Get transition duration with optional randomization
+  const getTransitionDuration = (baseDuration) => {
+    if (transitionVariation <= 0) return baseDuration;
+    const variation = Math.random() * transitionVariation * 2 - transitionVariation;
+    return Math.max(200, baseDuration + variation);
+  };
+
+  // Helper: Load multiple video formats and pick the one the browser supports
+  const setVideoSource = (videoElement, sourceConfig) => {
+    // Clear existing sources
+    videoElement.innerHTML = '';
+    
+    if (!sourceConfig.formats) {
+      videoElement.src = sourceConfig;
+      return;
+    }
+
+    // Try each format - browser will pick the first it supports
+    sourceConfig.formats.forEach(format => {
+      const source = document.createElement('source');
+      source.src = format.src;
+      source.type = format.type;
+      videoElement.appendChild(source);
+    });
+  };
+
+  // Preload next video in background
+  const preloadNextVideo = () => {
+    nextIndex = (heroIndex + 1) % sources.length;
+    nextVideoElement = new Audio(); // Use Audio element for silent preload
+    
+    if (sources[nextIndex].formats) {
+      // Try the best format (H.265) first
+      nextVideoElement.src = sources[nextIndex].formats[0].src;
+    } else {
+      nextVideoElement.src = sources[nextIndex];
+    }
+    
+    nextVideoElement.load();
+    nextVideoReady = true;
+  };
+
+  // Staggered fade: fade out current, fade in next
+  const fadeOutCurrentVideo = (duration) => {
+    return new Promise((resolve) => {
+      heroVideo.classList.add("is-fading-out");
+      setTimeout(() => {
+        heroVideo.classList.remove("is-fading-out");
+        resolve();
+      }, duration);
+    });
+  };
+
+  const fadeInNewVideo = (duration) => {
+    return new Promise((resolve) => {
+      heroVideo.classList.add("is-fading-in");
+      setTimeout(() => {
+        heroVideo.classList.remove("is-fading-in");
+        heroLoading.classList.remove("active");
+        resolve();
+      }, duration);
+    });
+  };
+
+  // Main video switching logic
+  const setSource = async (index) => {
     if (isTransitioning) return;
     isTransitioning = true;
-    loadAttempts = 0;
     
     heroIndex = index % sources.length;
-    console.log(`Loading video ${heroIndex + 1}/${sources.length}: ${sources[heroIndex]}`);
+    const currentSource = sources[heroIndex];
+    const fadeOutDuration = getTransitionDuration((currentSource.transition || 600) * 0.6);
+    const fadeInDuration = getTransitionDuration((currentSource.transition || 600) * 0.4);
     
-    heroVideo.classList.add("is-fading");
-    
-    setTimeout(() => {
-      heroVideo.src = sources[heroIndex];
+    console.log(`Loading video ${heroIndex + 1}/${sources.length}: ${currentSource.name}`);
+    heroLoading.classList.add("active");
+
+    try {
+      // Fade out current video
+      await fadeOutCurrentVideo(fadeOutDuration);
+      
+      // Load new video sources
+      setVideoSource(heroVideo, currentSource);
       heroVideo.playbackRate = playbackRate;
-      
-      // Remove any leftover error handlers before loading new video
-      heroVideo.onerror = null;
-      heroVideo.oncanplay = null;
-      
       heroVideo.load();
+
+      // Wait for video to be ready to play
+      await new Promise((resolve, reject) => {
+        const onCanPlay = () => {
+          heroVideo.removeEventListener('canplay', onCanPlay);
+          heroVideo.removeEventListener('error', onError);
+          resolve();
+        };
+        const onError = () => {
+          heroVideo.removeEventListener('canplay', onCanPlay);
+          heroVideo.removeEventListener('error', onError);
+          reject(new Error('Video load failed'));
+        };
+        
+        // Set timeout in case events don't fire
+        setTimeout(() => {
+          heroVideo.removeEventListener('canplay', onCanPlay);
+          heroVideo.removeEventListener('error', onError);
+          resolve();
+        }, 3000);
+        
+        heroVideo.addEventListener('canplay', onCanPlay, { once: true });
+        heroVideo.addEventListener('error', onError, { once: true });
+      });
+
+      // Play video and fade in
+      heroVideo.play().catch(err => console.log("Play prevented:", err));
+      
+      // Add subtle scale animation on fade in
+      heroVideo.classList.add("is-scaling-in");
+      await fadeInNewVideo(fadeInDuration);
+      heroVideo.classList.remove("is-scaling-in");
+
+      // Preload next video while current plays
+      preloadNextVideo();
+      
       isTransitioning = false;
-    }, fadeDuration);
-  };
-
-  const playNextVideo = () => {
-    setTimeout(() => {
-      setSource(heroIndex + 1);
-    }, pauseSeconds * 1000);
-  };
-
-  heroVideo.addEventListener("ended", () => {
-    console.log("Video ended, playing next");
-    playNextVideo();
-  });
-
-  heroVideo.addEventListener("error", (e) => {
-    console.error(`Video load error for ${sources[heroIndex]}:`, e);
-    loadAttempts++;
-    
-    if (loadAttempts < maxLoadAttempts) {
-      console.log(`Retry attempt ${loadAttempts}/${maxLoadAttempts}`);
-      setTimeout(() => {
-        heroVideo.load();
-      }, 500);
-    } else {
-      console.log("Max retries reached, skipping to next video");
+    } catch (error) {
+      console.error("Error loading video:", error);
       isTransitioning = false;
-      playNextVideo();
+      // Skip to next video on error
+      setTimeout(() => setSource(heroIndex + 1), pauseSeconds * 1000);
     }
+  };
+
+  // Event listeners
+  heroVideo.addEventListener("ended", () => {
+    setTimeout(() => setSource(heroIndex + 1), pauseSeconds * 1000);
   });
 
-  // Use 'canplay' instead of 'loadeddata' for better reliability
-  heroVideo.addEventListener("canplay", () => {
-    heroVideo.classList.remove("is-fading");
-    heroVideo.play().catch((err) => {
-      console.error("Play failed:", err);
-    });
-  });
-
-  // Fallback: ensure video is playing
+  // Resume if paused unexpectedly
   setInterval(() => {
     if (heroVideo && heroVideo.paused && !isTransitioning && document.hidden === false) {
-      console.log("Video paused unexpectedly, resuming...");
       heroVideo.play().catch(() => {});
     }
-  }, 1000);
+  }, 2000);
 
-  // Start first video
+  // Start with first video
   setSource(0);
 }
 

@@ -1,15 +1,38 @@
 window.videoConfig = {
   hero: {
     sources: [
-      "assets/videos/hero-bg.mp4",
-      "assets/videos/hero-2.mp4",
-      "assets/videos/hero-3.mp4",
-      "assets/videos/build-2.mp4",
-      "assets/videos/build-3.mp4"
+      {
+        name: "hero-bg",
+        formats: [
+          { src: "assets/videos/hero-bg.h265.mp4", type: "video/mp4; codecs=hev1" },
+          { src: "assets/videos/hero-bg.h264.mp4", type: "video/mp4; codecs=avc1" },
+          { src: "assets/videos/hero-bg.mp4", type: "video/mp4" }
+        ],
+        transition: 600  // milliseconds for fade
+      },
+      {
+        name: "hero-2",
+        formats: [
+          { src: "assets/videos/hero-2.h265.mp4", type: "video/mp4; codecs=hev1" },
+          { src: "assets/videos/hero-2.h264.mp4", type: "video/mp4; codecs=avc1" },
+          { src: "assets/videos/hero-2.mp4", type: "video/mp4" }
+        ],
+        transition: 650
+      },
+      {
+        name: "hero-3",
+        formats: [
+          { src: "assets/videos/hero-3.h265.mp4", type: "video/mp4; codecs=hev1" },
+          { src: "assets/videos/hero-3.h264.mp4", type: "video/mp4; codecs=avc1" },
+          { src: "assets/videos/hero-3.mp4", type: "video/mp4" }
+        ],
+        transition: 600
+      }
     ],
     fallback: "assets/images/hero-poster.svg",
     playbackRate: 0.85,
-    pauseBetweenSeconds: 0
+    pauseBetweenSeconds: 0,
+    transitionVariation: 50  // add random ±50ms to transition for less robotic feel
   },
   builds: [
     {
