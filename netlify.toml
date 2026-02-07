@@ -1,0 +1,28 @@
+# Netlify configuration for Performance Den
+# Static site - no build process required
+
+[build]
+  # Publish directory (all files served as-is)
+  publish = "."
+
+# Redirect rules for single-page navigation
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache configuration
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
