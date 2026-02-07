@@ -1,0 +1,17 @@
+{
+  "name": "performance-den",
+  "version": "1.0.0",
+  "description": "Performance Den - South African automotive performance specialists",
+  "scripts": {
+    "dev": "bun --hot run server.js",
+    "start": "bun run server.js"
+  },
+  "keywords": ["automotive", "performance", "honda", "south-africa"],
+  "author": "Performance Den",
+  "license": "MIT",
+  "dependencies": {
+    "canvas": "^3.2.1",
+    "pdf-parse": "^2.4.5",
+    "sharp": "^0.34.5"
+  }
+}

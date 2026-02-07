@@ -1,0 +1,8 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="40" fill="#111418"/>
+  <path d="M140 540C210 420 330 360 500 340L760 310C900 294 1040 350 1120 470" stroke="#FF3B2F" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="420" cy="620" r="68" fill="#0A0A0A" stroke="#FF3B2F" stroke-width="10"/>
+  <circle cx="820" cy="620" r="68" fill="#0A0A0A" stroke="#FF3B2F" stroke-width="10"/>
+  <text x="120" y="160" fill="#F4F6F8" font-family="Space Grotesk, sans-serif" font-size="42" font-weight="700">Honda Civic Time Attack</text>
+  <text x="120" y="220" fill="#A8B0B7" font-family="Space Grotesk, sans-serif" font-size="22">Placeholder build image</text>
+</svg>

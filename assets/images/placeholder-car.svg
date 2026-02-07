@@ -1,0 +1,10 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="48" fill="#111418"/>
+  <path d="M170 540C220 420 320 360 460 340L740 300C860 280 980 320 1060 420L1100 480H1000C980 440 940 420 900 420H320C260 420 220 450 190 510L170 540Z" fill="#ff3b2f" fill-opacity="0.15"/>
+  <path d="M160 560C200 470 290 410 430 392L740 350C860 334 970 370 1040 458L1075 508" stroke="#ff3b2f" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="380" cy="620" r="70" fill="#0a0a0a" stroke="#ff3b2f" stroke-width="12"/>
+  <circle cx="820" cy="620" r="70" fill="#0a0a0a" stroke="#ff3b2f" stroke-width="12"/>
+  <path d="M460 420H740" stroke="#f4f6f8" stroke-width="10" stroke-linecap="round" opacity="0.6"/>
+  <text x="120" y="120" fill="#f4f6f8" font-family="Space Grotesk, sans-serif" font-size="48" font-weight="600" opacity="0.75">Performance Den</text>
+  <text x="120" y="180" fill="#a8b0b7" font-family="Space Grotesk, sans-serif" font-size="24" opacity="0.7">Placeholder build image</text>
+</svg>

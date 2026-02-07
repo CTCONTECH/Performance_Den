@@ -1,0 +1,8 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="40" fill="#0F1114"/>
+  <path d="M140 560C220 430 340 370 520 350L780 320C930 304 1050 360 1120 470" stroke="#FF3B2F" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="440" cy="630" r="66" fill="#0A0A0A" stroke="#FF3B2F" stroke-width="10"/>
+  <circle cx="840" cy="630" r="66" fill="#0A0A0A" stroke="#FF3B2F" stroke-width="10"/>
+  <text x="120" y="160" fill="#F4F6F8" font-family="Space Grotesk, sans-serif" font-size="42" font-weight="700">S2000 Weekend Warrior</text>
+  <text x="120" y="220" fill="#A8B0B7" font-family="Space Grotesk, sans-serif" font-size="22">Placeholder build image</text>
+</svg>
