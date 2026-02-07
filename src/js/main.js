@@ -304,7 +304,7 @@ if (contactForm) {
         <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; align-items: center;">
           <a href="${mailtoLink}" class="form-action-link" style="display: inline-block; padding: 0.7rem 1.5rem; background: var(--accent); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; border: 2px solid var(--accent); cursor: pointer;">📧 Email</a>
           <span style="opacity: 0.4; font-size: 0.85rem;">or</span>
-          <a href="https://wa.me/27823203406?text=${encodeURIComponent(`Hi, I'd like to inquire about: ${message}`)}" class="form-action-link" style="display: inline-block; padding: 0.7rem 1.5rem; background: #25D366; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; border: 2px solid #25D366; cursor: pointer;">💬 WhatsApp</a>
+          <a href="https://wa.me/27785421642?text=${encodeURIComponent(`Hi, I'd like to inquire about: ${message}`)}" class="form-action-link" style="display: inline-block; padding: 0.7rem 1.5rem; background: #25D366; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; border: 2px solid #25D366; cursor: pointer;">💬 WhatsApp</a>
         </div>
         <small style="text-align: center; opacity: 0.6; font-size: 0.8rem;">Click close (✕) or pick a method above</small>
       </div>
