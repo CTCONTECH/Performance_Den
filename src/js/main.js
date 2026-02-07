@@ -310,6 +310,9 @@ if (contactForm) {
       </div>
     `;
     
+    // Scroll to show the status message with options
+    statusEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
     // Make action links close the status box when clicked
     const actionLinks = statusEl.querySelectorAll(".form-action-link");
     actionLinks.forEach(link => {
