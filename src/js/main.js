@@ -275,16 +275,9 @@ if (contactForm) {
     // Clear any existing timeout
     if (statusClearTimeout) clearTimeout(statusClearTimeout);
     
-    // Show loading state
+    // Show loading state - DON'T display the status bar yet
     submitBtn.disabled = true;
     submitBtn.textContent = "⏳ Processing...";
-    
-    statusEl.style.display = "flex";
-    statusEl.style.transition = "none";
-    statusEl.innerHTML = `<span>Processing your enquiry...</span>`;
-    statusEl.style.borderColor = "var(--muted)";
-    statusEl.style.backgroundColor = "rgba(168, 176, 183, 0.1)";
-    statusEl.style.color = "var(--muted)";
     
     // Simulate a brief delay for better UX
     await new Promise(resolve => setTimeout(resolve, 800));
@@ -293,7 +286,12 @@ if (contactForm) {
     const mailtoBody = `${message}\n\n---\nVehicle: ${platform}\nFrom: ${name}`;
     const mailtoLink = `mailto:Ctconenquiry@gmail.com?subject=Performance Den Enquiry from ${name}&body=${encodeURIComponent(mailtoBody)}`;
     
-    // Show success with options and close button
+    // Now show the status bar with options (RED BAR ONLY APPEARS HERE)
+    statusEl.style.display = "flex";
+    statusEl.style.transition = "none";
+    statusEl.style.borderColor = "var(--accent)";
+    statusEl.style.backgroundColor = "rgba(255, 59, 47, 0.08)";
+    statusEl.style.color = "var(--accent)";
     statusEl.innerHTML = `
       <div style="width: 100%; display: flex; flex-direction: column; gap: 1rem;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
@@ -311,9 +309,6 @@ if (contactForm) {
         <small style="text-align: center; opacity: 0.6; font-size: 0.8rem;">Click close (✕) or pick a method above</small>
       </div>
     `;
-    statusEl.style.borderColor = "var(--accent)";
-    statusEl.style.backgroundColor = "rgba(255, 59, 47, 0.08)";
-    statusEl.style.color = "var(--accent)";
     
     // Make action links close the status box when clicked
     const actionLinks = statusEl.querySelectorAll(".form-action-link");
