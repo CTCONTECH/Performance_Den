@@ -240,4 +240,51 @@ if (instagramGrid && config?.featuredPosts?.length) {
   }
 }
 
+// Contact form submission handler
+const contactForm = document.getElementById("contact-form");
+if (contactForm) {
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const statusEl = contactForm.querySelector(".form-status");
+    const submitBtn = contactForm.querySelector("button[type='submit']");
+    const formData = new FormData(contactForm);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const platform = formData.get("platform") || "Not specified";
+    const message = formData.get("message");
+    
+    // Disable button
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending...";
+    
+    // Build message for mailto
+    const mailtoBody = `${message}\n\n---\nVehicle: ${platform}\nFrom: ${name}`;
+    const mailtoLink = `mailto:Ctconenquiry@gmail.com?subject=Performance Den Enquiry from ${name}&body=${encodeURIComponent(mailtoBody)}`;
+    
+    // Show success and offer options
+    statusEl.innerHTML = `
+      ✓ Thanks ${name}!<br>
+      <small style="display: block; margin-top: 0.5rem;">
+        Choose how to send:<br>
+        <a href="${mailtoLink}" style="color: var(--accent); text-decoration: underline; display: inline-block; margin: 0.3rem 0;">📧 Send via Email</a>
+        &nbsp; • &nbsp;
+        <a href="https://wa.me/27823203406?text=${encodeURIComponent(`Hi, I'd like to inquire about: ${message}`)}" style="color: var(--accent); text-decoration: underline; display: inline-block; margin: 0.3rem 0;">💬 Send via WhatsApp</a>
+      </small>
+    `;
+    statusEl.style.color = "var(--accent)";
+    
+    // Reset form
+    contactForm.reset();
+    submitBtn.textContent = "Send Enquiry";
+    submitBtn.disabled = false;
+    
+    // Clear after 8 seconds
+    setTimeout(() => {
+      statusEl.textContent = "";
+    }, 8000);
+  });
+}
+
+
 

@@ -262,7 +262,7 @@
                 <a class="btn ghost" href="https://wa.me/27823203406">Chat on WhatsApp</a>
               </div>
             </div>
-            <form class="contact-form" aria-label="Contact form" action="https://formsubmit.co/Ctconenquiry@gmail.com" method="POST">
+            <form class="contact-form" aria-label="Contact form" id="contact-form">
               <label>
                 Full Name
                 <input type="text" name="name" placeholder="Your name" required />
@@ -279,8 +279,8 @@
                 How can we help?
                 <textarea name="message" rows="5" placeholder="Tell us about your build or service needs" required></textarea>
               </label>
-              <input type="hidden" name="_captcha" value="false" />
               <button class="btn primary" type="submit">Send Enquiry</button>
+              <p class="form-status"></p>
             </form>
           </div>
         </div>
