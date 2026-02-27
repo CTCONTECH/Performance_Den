@@ -1,6 +1,10 @@
+
 backend:
-  name: git-gateway
+  name: github
+  repo: CTCONTECH/Performance_Den
   branch: main
+  site_domain: performanceden.netlify.app
+  client_id: Ov23liTRcFa8Kgz5lYFC
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
